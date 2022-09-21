@@ -3,6 +3,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { User } from './entities/user.entity';
       database: process.env.DATABASE_NAME,
       entities: [User],
       synchronize: true
-    })
+    }),
+    PassportModule.register({ session: true })
   ]
 })
 export class AppModule {}

@@ -16,12 +16,8 @@ export class AuthService {
     email: string;
     displayName: string;
   }) {
-    let user = await this.userRepository.findOne({
-      where: { email }
-    });
-
+    let user = await this.userRepository.findOneBy({ email });
     if (!user) user = await this.createUser({ email, displayName });
-
     return user;
   }
 
@@ -33,5 +29,9 @@ export class AuthService {
     displayName: string;
   }) {
     return this.userRepository.create({ email, displayName });
+  }
+
+  async findOne({ id }: { id: number }) {
+    return this.userRepository.findOneBy({ id });
   }
 }
