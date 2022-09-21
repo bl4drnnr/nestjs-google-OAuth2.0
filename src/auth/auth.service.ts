@@ -16,9 +16,10 @@ export class AuthService {
     email: string;
     displayName: string;
   }) {
-    let user = await this.userRepository.findOneBy({ email });
-    if (!user) user = await this.createUser({ email, displayName });
-    return user;
+    const user = await this.userRepository.findOneBy({ email });
+    if (user) return user;
+    const newUser = this.userRepository.create({ email, displayName });
+    return this.userRepository.save(newUser);
   }
 
   async createUser({
@@ -31,7 +32,7 @@ export class AuthService {
     return this.userRepository.create({ email, displayName });
   }
 
-  async findOne({ id }: { id: number }) {
-    return this.userRepository.findOneBy({ id });
+  async findOne({ email }: { email: string }) {
+    return this.userRepository.findOneBy({ email });
   }
 }

@@ -14,7 +14,7 @@ export class SerializerUtil extends PassportSerializer {
   }
 
   async deserializeUser(payload: any, done: Function) {
-    const user = await this.authService.findOne({ id: payload.id });
+    const user = await this.authService.findOne({ email: payload.email });
     return user ? done(null, user) : done(null, null);
   }
 }
